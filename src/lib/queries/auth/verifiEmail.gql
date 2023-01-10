@@ -1,0 +1,11 @@
+mutation VerifyEmail($id: ID!, $code: String!, $resend: Boolean!) {
+  verifyEmail(id: $id, code: $code, resend: $resend) {
+    id
+    role
+    email
+    token
+    tokenExpiredAt
+    fullName
+    progress
+  }
+}

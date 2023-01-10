@@ -1,0 +1,435 @@
+directive @requireAuth(token: String) on FIELD_DEFINITION
+
+type Activity {
+  courseId: ID!
+  id: ID!
+}
+
+type AnswerOption {
+  hint: String
+  id: ID!
+  question: Question
+  questionId: String
+  value: String
+}
+
+scalar Any
+
+type Auth {
+  email: String
+  expiredAt: String!
+  id: ID!
+  permissions: [String]
+  progress: Int!
+  role: String!
+  token: String!
+  username: String
+}
+
+type Course {
+  activities: [ID!]
+  assignments: [ID!]
+  author: ID!
+  code: String!
+  covered: String!
+  createdAt: Time
+  deletedAt: Time
+  document: [ID!]
+  dueDate: Time
+  grades: ID!
+  id: ID!
+  lecturer: ID!
+  longDescription: String
+  notes: [ID!]
+  program: String!
+  progress: Int!
+  semester: String!
+  status: String
+  timeline: ID!
+  title: String!
+  type: String!
+  updatedAt: Time
+  userId: ID!
+  users: [ID!]
+  videos: [ID!]
+  year: String!
+}
+
+type Education {
+  createdAt: Time
+  degree: String!
+  deletedAt: Time
+  graduationYear: String!
+  id: ID!
+  institution: String!
+  updatedAt: Time
+  userId: ID!
+}
+
+type EvaluationCriteria {
+  course: Course
+  courseID: String
+  gradeLabels: [String]
+  id: ID!
+  maxGrade: Int
+  name: String
+  passGrade: Int
+}
+
+type File {
+  category: String!
+  contentType: String!
+  courseId: ID!
+  createdAt: Time
+  deletedAt: Time
+  filename: String!
+  id: ID!
+  path: String!
+  size: Int64!
+  title: String!
+  updatedAt: Time
+  url: String!
+  userId: ID!
+}
+
+type Grade {
+  courseId: ID!
+  id: ID!
+}
+
+scalar Int64
+
+type Mail {
+  attach: Boolean!
+  body: String!
+  subject: String!
+  to: [String!]
+}
+
+type Mutation {
+  changePassword(email: String!, token: String!): User
+  createCourse(input: NewCourse!): Course
+  createEducation(input: NewEducation!): Education!
+  createFile(input: NewFile!): File!
+  createNote(input: NewNote!): Note!
+  createQuiz(input: NewQuiz!): Quiz!
+  createReferee(input: NewReferee!): Referee!
+  createRole(name: String!): Role
+  createSetting(input: NewSetting!): Video!
+  createUser(input: NewUser): User
+  createVideo(input: NewVideo!): Video!
+  deleteCourse(id: ID!): Course
+  deleteMail(id: ID!): Mail
+  deleteManyCourse(id: [ID!]): Course
+  deleteManyUsers(id: [ID!]): User
+  deleteRole(id: ID!): Role
+  deleteUser(id: ID): User
+  forgetPassword(email: String!): User
+  logOut: User
+  resetPassword(email: String!, password: String!): User
+  send(input: NewMail, tpl: String!): Any
+  signIn(email: String!, password: String!): User
+  signUp(email: String!, fullName: String!, password: String!, role: String!): User
+  updateCourse(data: Any): Course
+  updateEducation(input: Any): Education!
+  updateFile(input: Any): File!
+  updateReferee(input: Any): Referee!
+  updateRole(input: UpdateRole): Role
+  updateUser(data: Any): User
+  uploadFiles(input: [UploadFile!]!): [File!]!
+  verifyEmail(code: String!, id: ID!, resend: Boolean!): User
+}
+
+input NewAccount {
+  email: String!
+  firstName: String!
+  fullName: String!
+  lastName: String!
+  password: String!
+  role: String!
+}
+
+input NewCourse {
+  code: String!
+  coverImg: String!
+  id: ID!
+  longDescription: String!
+  program: String!
+  semester: String!
+  shortDescription: String!
+  title: String!
+  type: String!
+  userId: ID!
+}
+
+input NewEducation {
+  degree: String!
+  graduationYear: String!
+  institution: String!
+  userId: ID!
+}
+
+input NewFile {
+  category: String!
+  file: Upload!
+  userId: ID!
+}
+
+input NewMail {
+  attach: Boolean!
+  body: Any!
+  subject: String!
+  to: [String!]
+}
+
+input NewNote {
+  courseId: ID!
+  description: String!
+  title: String!
+  url: String!
+}
+
+input NewQuiz {
+  courseId: ID!
+  description: String!
+  title: String!
+}
+
+input NewReferee {
+  email: String!
+  fullName: String!
+  phone: String!
+  userId: ID!
+}
+
+input NewSetting {
+  type: String
+}
+
+input NewUser {
+  email: String!
+  firstName: String!
+  lastName: String!
+  password: String!
+}
+
+input NewVideo {
+  courseId: ID!
+  description: String!
+  title: String!
+  url: String!
+}
+
+type Note {
+  courseId: ID!
+  createdAt: Time
+  deletedAt: Time
+  description: String!
+  id: ID!
+  text: String!
+  title: String!
+  updatedAt: Time
+}
+
+type Query {
+  course: Course
+  courses(ids: [ID!]): [Course]
+  education(id: ID!): Education!
+  educations(userId: ID): [Education!]!
+  file(id: ID!): File!
+  files(userId: ID!): [File!]!
+  mail(id: ID!): Mail
+  mails: [Mail]
+  note(id: ID!): Note!
+  notes(limit: Int = 25, offset: Int = 0): [Note!]!
+  quiz(id: ID!): Quiz!
+  quizzes(limit: Int = 25, offset: Int = 0): [Quiz!]!
+  referee(id: ID!): Referee!
+  referees(userId: ID): [Referee!]!
+  refresh: User
+  role(id: ID!): Role
+  roles: [Role]
+  setting(id: ID!): Role!
+  settings(limit: Int = 25, offset: Int = 0): [Setting!]!
+  user(id: ID!): User
+  users: [User]
+  video(id: ID!): Video!
+  videos(limit: Int = 25, offset: Int = 0): [Video!]!
+}
+
+type Question {
+  answer: AnswerOption
+  correctAnswerID: String
+  description: String
+  id: ID!
+  question: String
+  questionType: String
+  quiz: Quiz
+  quizId: String
+}
+
+type Quiz {
+  courseId: ID!
+  createdAt: Time
+  deletedAt: Time
+  description: String!
+  id: ID!
+  questions: [Question]
+  quizType: String
+  targetId: String
+  title: String!
+  updatedAt: Time
+}
+
+type Referee {
+  createdAt: Time
+  deletedAt: Time
+  email: String!
+  fullName: String!
+  id: ID!
+  phone: String!
+  updatedAt: Time
+  userId: ID!
+}
+
+type Role {
+  id: ID!
+  name: String
+  permissions: [Any]
+}
+
+type Setting {
+  id: ID!
+  roles: [ID!]
+  type: String
+  userId: ID!
+}
+
+type Target {
+  Quizzes: [Quiz]
+  checkList: [String]
+  completionInstructions: String
+  description: String
+  id: ID!
+  linkToComplete: String
+  resourceURL: String
+  resubmittable: Boolean
+  reviewChecklist: [String]
+  role: Role
+  sessionAt: Time
+  sortIndex: Int
+  targetGroup: TargetGroup
+  targetGroupID: String
+  targetVersions: TargetVersionList
+  title: String
+}
+
+type TargetGroup {
+  id: ID!
+}
+
+type TargetVersionList {
+  id: ID!
+}
+
+type Thumbnail {
+  id: ID!
+  url: String!
+  videoId: ID!
+}
+
+scalar Time
+
+type Timeline {
+  courseId: ID!
+  id: ID!
+}
+
+input UpdateRole {
+  id: ID!
+  name: String
+  permissions: [Any]
+}
+
+input UpdateSetting {
+  name: String
+  permissions: [String]
+}
+
+scalar Upload
+
+input UploadFile {
+  file: Upload!
+}
+
+type User {
+  about: String!
+  address: String!
+  avatarUrl: String!
+  churchAddress: String!
+  churchInvolved: String!
+  churchName: String!
+  city: String!
+  confirmationMailSentAt: Time
+  confirmedAt: Time
+  country: String!
+  courses: [ID!]
+  createdAt: Time
+  deletedAt: Time
+  dob: String!
+  email: String!
+  files: [ID!]
+  firstName: String!
+  fullName: String!
+  gender: String!
+  godsWorkings: [String!]
+  healthConditions: [String!]
+  healthIssueDescription: String!
+  id: String!
+  isVerified: Boolean!
+  lastName: String!
+  loggedIn: Boolean!
+  matricNumber: String!
+  middleName: String!
+  nationality: String!
+  passwordHash: String!
+  passwordSalt: String!
+  pastorEmail: String!
+  pastorName: String!
+  pastorPhone: String!
+  permissions: [String]
+  phone: String!
+  platform: String!
+  profession: String!
+  program: String!
+  progress: Int!
+  qualifications: [ID!]
+  reason: String!
+  referees: [ID!]
+  regNumber: String!
+  role: String!
+  salvationBrief: String!
+  scholarship: Boolean
+  scholarshipReason: String!
+  state: String!
+  timeZone: String!
+  token: String!
+  tokenExpiredAt: Int64!
+  updatedAt: Time
+  username: String!
+  wallet: Float!
+  zip: String!
+}
+
+type Video {
+  courseId: ID!
+  createdAt: Time
+  deletedAt: Time
+  description: String!
+  id: ID!
+  related(limit: Int = 10, offset: Int = 0): [Video!]!
+  thumbnail: Thumbnail
+  title: String!
+  updatedAt: Time
+  url: String!
+}

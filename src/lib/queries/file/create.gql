@@ -1,0 +1,10 @@
+mutation Create($userId: ID!, $file: Upload!, $category: String!) {
+  createFile(input: { userId: $userId, file: $file, category: $category }) {
+    id
+    url
+    path
+    size
+    contentType
+    createdAt
+  }
+}

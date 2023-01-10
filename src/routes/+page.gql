@@ -1,0 +1,12 @@
+query PageRefresh @cache(policy: NetworkOnly) {
+  refresh {
+    id
+    fullName
+    role
+    email
+    avatarUrl
+    token
+    tokenExpiredAt
+    progress
+  }
+}
