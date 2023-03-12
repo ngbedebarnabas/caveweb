@@ -4,8 +4,6 @@ Experience the Intense Atmosphere of Heaven with Adullam - Where Learning Meets 
 
 ## Install all the a project dependencies
 
-If you're seeing this, you've probably already done this step. Congrats!
-
 ```bash
 npm install
 ```
