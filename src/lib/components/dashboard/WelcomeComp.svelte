@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { Row, Col, Card, CardBody } from "sveltestrap"
-  import { userData } from "$lib/helpers/store"
-  import { RefreshStore } from "$houdini"
+  import { Row, Col, Card, CardBody } from "sveltestrap";
+  import { auth } from "$lib/store/authentication";
+  import { onMount } from "svelte";
 
-  const auth = new RefreshStore()
-  let user: any
-  $: if ($auth.data?.refresh?.id) user = $auth.data?.refresh
+  let user: any;
+  onMount(async () => {
+    user = await auth.refresh();
+  });
 </script>
 
 <Card class="overflow-hidden">

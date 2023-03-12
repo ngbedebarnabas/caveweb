@@ -2,16 +2,14 @@
   import { Dropdown, DropdownToggle, Form, Input } from "sveltestrap";
 
   import { _ } from "$lib/helpers/store";
-  import type { Refresh$result } from "$houdini";
-  import { RefreshStore } from "$houdini";
+  import { auth } from "$lib/store/authentication";
   import RightsidebarButton from "../../components/RightsidebarButton.svelte";
   import ProfileMenu from "../ProfileMenu.svelte";
+  import { onMount } from "svelte";
   // import logoLightSvg from "$lib/assets/images/logo-light.svg?raw";
   // import logoLightPng from "$lib/assets/images/logo-light.png";
   // import logoSvg from "$lib/assets/images/logo.svg?raw";
   // import logoDarkPng from "$lib/assets/images/logo-dark.png";
-
-const auth = new RefreshStore()
 
   interface FsDocument extends Document {
     mozFullScreenElement?: Element;
@@ -48,8 +46,7 @@ const auth = new RefreshStore()
       if (fsDocElem.requestFullscreen) fsDocElem.requestFullscreen();
       else if (fsDocElem.msRequestFullscreen) fsDocElem.msRequestFullscreen();
       else if (fsDocElem.mozRequestFullScreen) fsDocElem.mozRequestFullScreen();
-      else if (fsDocElem.webkitRequestFullscreen)
-        fsDocElem.webkitRequestFullscreen();
+      else if (fsDocElem.webkitRequestFullscreen) fsDocElem.webkitRequestFullscreen();
     } else if (fsDoc.exitFullscreen) fsDoc.exitFullscreen();
     else if (fsDoc.msExitFullscreen) fsDoc.msExitFullscreen();
     else if (fsDoc.mozCancelFullScreen) fsDoc.mozCancelFullScreen();
@@ -76,8 +73,10 @@ const auth = new RefreshStore()
   }
 
   export let sidebar = false;
-  let user: Refresh$result | null;
-  $: user = $auth.data;
+  let user: any;
+  onMount(async () => {
+    user = await auth.refresh();
+  });
 </script>
 
 <header id="page-topbar">
@@ -115,22 +114,13 @@ const auth = new RefreshStore()
       <!-- App Search-->
       <Form class="app-search d-none d-lg-block">
         <div class="position-relative">
-          <Input
-            type="text"
-            class="form-control"
-            placeholder={$_.navbar.search.text}
-          />
+          <Input type="text" class="form-control" placeholder={$_.navbar.search.text} />
           <span class="bx bx-search-alt" />
         </div>
       </Form>
 
       <Dropdown class="dropdown-mega d-none d-lg-block ms-2">
-        <DropdownToggle
-          class="btn header-item"
-          color="white"
-          caret
-          tag="button"
-        >
+        <DropdownToggle class="btn header-item" color="white" caret tag="button">
           {$_.navbar.dropdown.megamenu.text}
           <i class="mdi mdi-chevron-down" />
         </DropdownToggle>

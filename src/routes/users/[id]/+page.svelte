@@ -3,7 +3,6 @@
   import { page } from "$app/stores";
     import Breadcrumb from "$lib/common/Breadcrumb.svelte"
   import user from "$lib/graphql/user";
-  import { auth, userData } from "$lib/helpers/store";
   import {
     Card,
     CardBody,
@@ -17,7 +16,8 @@
   } from "sveltestrap";
   import UserDetail from "./UserDetail.svelte";
 
-  let data: any[];
+  export let data: any[];
+  console.log(data);
   let tags = ["penticostal", "catholic", "methodist"];
 
   const roles = [

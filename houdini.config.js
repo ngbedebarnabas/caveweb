@@ -2,7 +2,7 @@
 
 /** @type {import('houdini').ConfigFile} */
 const config = {
-  apiUrl: "http://localhost:8000/query",
+  apiUrl: "http://localhost:8000/api/query ",
   plugins: {
     "houdini-svelte": { client: "./src/client" },
   },

@@ -1,8 +1,0 @@
-mutation SignUp($fullName: String!, $email: String!, $password: String!, $role: String!) {
-  signUp(fullName: $fullName, email: $email, password: $password, role: $role) {
-    id
-    email
-    createdAt
-    updatedAt
-  }
-}

@@ -1,24 +1,17 @@
 <script lang="ts">
   import { browser } from "$app/environment";
   import { page } from "$app/stores";
+  import { GetUserStore, type GetUser$result } from "$houdini";
   import profileImg from "$lib/assets/images/profile-img.png";
   import Breadcrumb from "$lib/common/Breadcrumb.svelte";
   import Document from "$lib/components/Account/Document.svelte";
   import ProfileInfo from "$lib/components/Account/ProfileInfo.svelte";
   import Referee from "$lib/components/ApplicationForm/Referee.svelte";
   import Tabs from "$lib/components/Tabs.svelte";
-  import user from "$lib/graphql/user";
-  import { auth, userData } from "$lib/helpers/store";
+  import { auth } from "$lib/store/authentication";
+  import { onMount } from "svelte";
   import { slide } from "svelte/transition";
-  import {
-    Alert,
-    Card,
-    CardBody,
-    CardTitle,
-    Col,
-    Container,
-    Row,
-  } from "sveltestrap";
+  import { Alert, Card, CardBody, CardTitle, Col, Container, Row } from "sveltestrap";
 
   let alert: false;
   let subscribemodal = false;
@@ -26,6 +19,11 @@
   let active = 0;
   let isRef: boolean;
   let id: string;
+
+  onMount(async () => {
+    data = await (await store.fetch()).data;
+    data?.user
+  });
 
   let menus: string[] = [
     // "Overview",
@@ -36,29 +34,24 @@
     // "Settings",
   ];
 
-  $: id = $page.params.id;
   const togglesubscribemodal = () => (subscribemodal = !subscribemodal);
-  $: if (browser && !$userData.user?.id && !!id) user.query("user", { id });
+  // $: if (browser && !data?.user?.id && !!id) user.query("user", { id });
 </script>
 
-{#if $userData.user?.id}
+<!-- {#if $userData.user?.id}
+
   <div class="page-content">
     <Container fluid>
       <Breadcrumb title="Contacts" breadcrumbItem="Profile" />
       {#if alert}
         <div transition:slide={{ duration: 500 }}>
-          <Alert
-            color="info"
-            class="alert-dismissible fade show mb-4"
-            role="alert"
-          >
+          <Alert color="info" class="alert-dismissible fade show mb-4" role="alert">
             <div class="d-flex">
               <i class="mdi mdi-alert-circle-outline me-2 fs-1" />
               <p class="my-auto">
                 A maximum of two referees are reqiured, please click on
-                <button
-                  on:click={() => (isRef = true)}
-                  class="btn btn-link alert-link p-0">Add Referee</button
+                <button on:click={() => (isRef = true)} class="btn btn-link alert-link p-0"
+                  >Add Referee</button
                 >
                 to add another referee in order to complete your Adullam Application
               </p>
@@ -75,7 +68,7 @@
                 <Col xs="7">
                   <div class="text-primary p-3">
                     <h5 class="text-primary">Welcome Back !</h5>
-                    <!-- <p>RCN Theological Seminary - Adullam</p> -->
+                    <p>RCN Theological Seminary - Adullam</p>
                   </div>
                 </Col>
                 <Col xs="5" class="align-self-end">
@@ -145,40 +138,12 @@
         </Col>
 
         <Col xl="8">
-          <!-- <Row>
-            <Col md={4}>
-              <Card class="mini-stats-wid">
-                <CardBody>
-                  <MiniStats name="Completed Courses" stat="0">
-                    <i slot="icon" class="bx bx-check-circle font-size-24" />
-                  </MiniStats>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card class="mini-stats-wid">
-                <CardBody>
-                  <MiniStats name="Pending Courses" stat="0">
-                    <i slot="icon" class="bx bx-hourglass font-size-24" />
-                  </MiniStats>
-                </CardBody>
-              </Card>
-            </Col>
-            <Col md={4}>
-              <Card class="mini-stats-wid">
-                <CardBody>
-                  <MiniStats name="New Converts" stat="0">
-                    <i slot="icon" class="bx bx-package font-size-24" />
-                  </MiniStats>
-                </CardBody>
-              </Card>
-            </Col>
-          </Row> -->
+
           <div class="mt-4">
             <Tabs {menus} {active}>
-              <!-- <div slot="id-1">
+              <div slot="id-1">
                 <Overview />
-              </div> -->
+              </div>
               <div slot="id-1">
                 <ProfileInfo />
               </div>
@@ -191,4 +156,5 @@
       </Row>
     </Container>
   </div>
-{/if}
+
+{/if} -->

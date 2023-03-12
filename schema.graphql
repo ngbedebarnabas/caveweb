@@ -1,152 +1,449 @@
 directive @requireAuth(token: String) on FIELD_DEFINITION
 
 type Activity {
-  courseId: ID!
+  activityType: ActivityType!
+  courseContentID: ID
+  courseID: ID!
+  createdAt: Time
+  deletedAt: Time
   id: ID!
+  updatedAt: Time
+  userID: ID!
 }
 
-type AnswerOption {
-  hint: String
+enum ActivityType {
+  ASSIGNMENT_GRADE_RECEIVED
+  ASSIGNMENT_SUBMITTED
+  COURSE_COMPLETED
+  COURSE_ENROLLED
+  COURSE_PROGRESS
+  COURSE_VIEW
+  FORUM_COMMENT_CREATED
+  FORUM_COMMENT_UPDATED
+  FORUM_POST_CREATED
+  FORUM_POST_UPDATED
+  GRADE_RECEIVED
+  MEDIA_INTERACTION
+  PAGE_VIEW
+  QUIZ_GRADE_RECEIVED
+  QUIZ_TAKEN
+  RESOURCE_ACCESSED
+}
+
+type Answer {
+  choices: [AnswerChoice]
+  createdAt: Time!
+  feedback: String
   id: ID!
-  question: Question
-  questionId: String
+  isCorrect: Boolean
+  pointsAwarded: Int
+  question: Question!
+  submission: Submission!
+  updatedAt: Time!
   value: String
+  weight: Int
+}
+
+type AnswerChoice {
+  feedback: String
+  id: ID!
+  isCorrect: Boolean
+  text: String!
+  weight: Int
+}
+
+input AnswerChoiceInput {
+  feedback: String
+  id: ID!
+  isCorrect: Boolean
+  text: String!
+  weight: Int
+}
+
+input AnswerInput {
+  choices: [AnswerChoiceInput]
+  feedback: String
+  isCorrect: Boolean
+  pointsAwarded: Int
+  question: UpdateQuestionInput!
+  submission: SubmissionInput!
+  value: String
+  weight: Int
 }
 
 scalar Any
 
-type Auth {
-  email: String
-  expiredAt: String!
+type Bonus {
+  description: String!
   id: ID!
-  permissions: [String]
-  progress: Int!
-  role: String!
-  token: String!
-  username: String
+  name: String!
+  percentage: Int!
+}
+
+enum CRUDPermission {
+  CREATE
+  DELETE
+  READ
+  UPDATE
 }
 
 type Course {
-  activities: [ID!]
-  assignments: [ID!]
-  author: ID!
+  activityIds: [ID!]!
+  assignmentIds: [ID!]!
   code: String!
-  covered: String!
+  coverImageUrl: String
   createdAt: Time
   deletedAt: Time
-  document: [ID!]
-  dueDate: Time
-  grades: ID!
+  description: String
+  endDate: Time
+  forumId: ID!
+  gradeIds: [ID!]!
   id: ID!
-  lecturer: ID!
-  longDescription: String
-  notes: [ID!]
-  program: String!
-  progress: Int!
+  instructorIds: [ID!]!
+  matricNumber: String!
+  programType: ProgramType!
+  progress: CourseProgress!
+  quizzeIds: [ID!]!
   semester: String!
-  status: String
-  timeline: ID!
+  shortDescription: String!
+  startDate: Time
+  status: CourseStatus!
+  students: [User!]!
   title: String!
-  type: String!
+  type: CourseType!
   updatedAt: Time
-  userId: ID!
-  users: [ID!]
-  videos: [ID!]
+  userId: String!
   year: String!
 }
 
-type Education {
-  createdAt: Time
-  degree: String!
-  deletedAt: Time
-  graduationYear: String!
-  id: ID!
-  institution: String!
-  updatedAt: Time
+type CourseProgress {
+  assignmentsCompleted: Int!
+  lecturesCompleted: Int!
+  overallProgress: Int!
+  quizzesCompleted: Int!
+}
+
+enum CourseStatus {
+  COMPLETED
+  DELAYED
+  IN_PROGRESS
+}
+
+enum CourseType {
+  LESSONS
+  PRACTICUM
+  SHORT_COURSE
+}
+
+input CreatMediaInput {
+  category: String!
+  description: String
+  file: CreateFileInput!
+  mediaType: MediaType!
+  title: String!
+}
+
+input CreateActivityInput {
+  activityType: ActivityType!
+  courseContentID: ID
+  courseID: ID!
+  userID: ID!
+}
+
+input CreateCourseInput {
+  code: String!
+  coverImageUrl: String
+  description: String
+  endDate: Time
+  instructorIds: [ID!]!
+  programType: ProgramType!
+  semester: String!
+  shortDescription: String!
+  startDate: Time
+  status: CourseStatus!
+  title: String!
+  type: CourseType!
   userId: ID!
+}
+
+input CreateEvaluationCriteriaInput {
+  isPassFail: Boolean
+  passingScore: Int
+  quizId: ID!
+  resubmissionPolicy: ResubmissionPolicy
+  weight: Int
+}
+
+input CreateFileInput {
+  mimeType: String!
+  name: String!
+  size: Int!
+  url: String!
+}
+
+input CreateForumCommentInput {
+  content: String!
+  courseId: ID!
+  files: [ID!]
+  postId: ID!
+}
+
+input CreateForumInput {
+  courseId: ID!
+  description: String
+  name: String!
+  tags: [ID!]
+}
+
+input CreateForumPostInput {
+  content: String!
+  courseId: ID!
+  files: [ID!]
+  tags: [ID!]
+  title: String!
+}
+
+input CreateGradeInput {
+  assignmentId: ID!
+  comments: String
+  courseId: ID!
+  criteria: String
+  studentId: ID!
+  value: Int!
+}
+
+input CreateNotificationInput {
+  courseId: ID!
+  link: String
+  recipientId: ID!
+  senderId: ID!
+  type: NotificationType!
+}
+
+input CreateQuestionInput {
+  categories: [String]
+  choices: [AnswerChoiceInput]
+  correctAnswer: String
+  feedback: String
+  hints: [String]
+  matchingPairs: [MatchingPairInput]
+  pointValue: Int
+  randomize: Boolean
+  text: String!
+  type: QuestionType!
+}
+
+input CreateQuizInput {
+  categories: [String!]
+  name: String!
+  questions: [CreateQuestionInput!]!
+  shuffleQuestions: Boolean
+  timeLimit: Int
+}
+
+input CreateTagInput {
+  name: String!
+}
+
+input CreateTargetInput {
+  courseId: ID!
+  description: String
+  endDate: Time!
+  name: String!
+  startDate: Time!
+  targetValue: Int!
+  units: String
 }
 
 type EvaluationCriteria {
-  course: Course
-  courseID: String
-  gradeLabels: [String]
+  bonuses: [Bonus!]!
+  createdAt: Time
+  deletedAt: Time
+  gradingScale: [GradeScale!]!
   id: ID!
-  maxGrade: Int
-  name: String
-  passGrade: Int
+  isPassFail: Boolean!
+  passingScore: Int!
+  penalties: [Penalty!]!
+  quiz: Quiz!
+  resubmissionPolicy: ResubmissionPolicy!
+  scoreDistribution: [ScoreDistribution!]!
+  updatedAt: Time
+  weight: Int!
 }
 
 type File {
-  category: String!
-  contentType: String!
+  encoding: String!
+  mimetype: String!
+  name: String!
+  size: Int!
+  url: String!
+}
+
+type Forum {
   courseId: ID!
   createdAt: Time
   deletedAt: Time
-  filename: String!
+  description: String
   id: ID!
-  path: String!
-  size: Int64!
-  title: String!
+  name: String!
+  postIds: [ID!]!
+  tagIds: [ID!]!
   updatedAt: Time
-  url: String!
+}
+
+type ForumComment {
+  content: String!
+  courseId: ID!
+  createdAt: Time
+  deletedAt: Time
+  downvotes: Int!
+  fileIds: [ID!]!
+  id: ID!
+  postId: ID!
+  updatedAt: Time
+  upvotes: Int!
   userId: ID!
 }
 
-type Grade {
-  courseId: ID!
+type ForumPost {
+  author: User!
+  commentIds: [ID!]!
+  content: String!
+  course: Course!
+  createdAt: Time
+  deletedAt: Time
+  downvotes: Int!
+  fileIds: [ID!]!
   id: ID!
+  tags: [ID!]!
+  title: String!
+  updatedAt: Time
+  upvotes: Int!
+}
+
+type Grade {
+  comments: String
+  course: Course!
+  createdAt: Time
+  criteria: String
+  deletedAt: Time
+  id: ID!
+  quizId: ID!
+  student: User!
+  updatedAt: Time
+  value: Int!
+}
+
+type GradeScale {
+  grade: String!
+  id: ID!
+  maxScore: Int!
+  minScore: Int!
 }
 
 scalar Int64
 
-type Mail {
-  attach: Boolean!
-  body: String!
+type MailInput {
+  attachmentUrl: String
+  content: Any
+  id: ID!
   subject: String!
-  to: [String!]
+  template: String!
+  to: [String!]!
+}
+
+type MatchingPair {
+  id: ID!
+  left: String!
+  question: Question!
+  right: String!
+}
+
+input MatchingPairInput {
+  left: String
+  right: String
+}
+
+type Media {
+  category: String!
+  createdAt: Time
+  deletedAt: Time
+  description: String
+  duration: Int64!
+  file: File!
+  id: ID!
+  mediaType: MediaType!
+  title: String!
+  updatedAt: Time
+  videoPlayerInfo: VideoPlayerInfo
+}
+
+enum MediaType {
+  ARCHIVE
+  AUDIO
+  IMAGE
+  OTHERS
+  PDF
+  PPT
+  SPREADSHEET
+  TEXT
+  VIDEO
+  WORD_DOC
+}
+
+enum Model {
+  ACTIVITY
+  ANSWER_CHOICE
+  COURSE
+  COURSE_CONTENT
+  FILE
+  FORUM
+  FORUM_COMMENT
+  FORUM_POST
+  GRADE
+  MATCHING_PAIR
+  NOTIFICATION
+  QUESTION
+  QUIZ
+  SUBMISSION
+  TARGET
+  USER
 }
 
 type Mutation {
-  changePassword(email: String!, token: String!): User
-  createCourse(input: NewCourse!): Course
-  createEducation(input: NewEducation!): Education!
-  createFile(input: NewFile!): File!
-  createNote(input: NewNote!): Note!
-  createQuiz(input: NewQuiz!): Quiz!
-  createReferee(input: NewReferee!): Referee!
-  createRole(name: String!): Role
-  createSetting(input: NewSetting!): Video!
+  createActivity(input: CreateActivityInput!): Activity
+  createCourse(input: CreateCourseInput): Course!
+  createEvaluationCriteria(input: CreateEvaluationCriteriaInput!): EvaluationCriteria!
+  createGrade(input: CreateGradeInput!): Grade!
+  createMedia(input: CreatMediaInput!): Media
+  createNotification(input: CreateNotificationInput!): Notification!
+  createQuiz(input: CreateQuestionInput!): Quiz
+  createSetting(input: NewSetting!): Setting!
+  createTarget(input: CreateTargetInput!): Target
   createUser(input: NewUser): User
-  createVideo(input: NewVideo!): Video!
-  deleteCourse(id: ID!): Course
-  deleteMail(id: ID!): Mail
-  deleteManyCourse(id: [ID!]): Course
+  deleteActivity(id: ID!): Boolean
+  deleteCourse(id: ID!): Course!
+  deleteEvaluationCriteria(id: ID!): EvaluationCriteria!
+  deleteGrade(id: ID!): Boolean!
   deleteManyUsers(id: [ID!]): User
-  deleteRole(id: ID!): Role
+  deleteMedia(id: ID!): Media
+  deleteNotification(id: ID!): Notification!
+  deleteQuiz(id: ID!): Boolean
+  deleteTarget(id: ID!): Target
   deleteUser(id: ID): User
-  forgetPassword(email: String!): User
-  logOut: User
-  resetPassword(email: String!, password: String!): User
-  send(input: NewMail, tpl: String!): Any
-  signIn(email: String!, password: String!): User
-  signUp(email: String!, fullName: String!, password: String!, role: String!): User
-  updateCourse(data: Any): Course
-  updateEducation(input: Any): Education!
-  updateFile(input: Any): File!
-  updateReferee(input: Any): Referee!
-  updateRole(input: UpdateRole): Role
+  grantPermission(input: PermissionInput!): Permission
+  revokePermission(input: PermissionInput!): Permission
+  submitQuiz(answers: [AnswerInput!]!, quizId: ID!): Submission
+  updateActivity(input: UpdateActivityInput!): Activity
+  updateCourse(input: Any): Course!
+  updateEvaluationCriteria(id: ID!, input: UpdateEvaluationCriteriaInput!): EvaluationCriteria!
+  updateGrade(id: ID!, input: UpdateGradeInput!): Grade!
+  updateMedia(input: UpdateMediaInput!): Media
+  updateNotification(id: ID!, input: UpdateNotificationInput!): Notification!
+  updatePermission(input: PermissionInput!): Permission
+  updateQuiz(id: ID!, input: UpdateQuizInput!): Quiz
+  updateTarget(id: ID!, input: UpdateTargetInput!): Target
   updateUser(data: Any): User
-  uploadFiles(input: [UploadFile!]!): [File!]!
-  verifyEmail(code: String!, id: ID!, resend: Boolean!): User
-}
-
-input NewAccount {
-  email: String!
-  firstName: String!
-  fullName: String!
-  lastName: String!
-  password: String!
-  role: String!
 }
 
 input NewCourse {
@@ -158,47 +455,8 @@ input NewCourse {
   semester: String!
   shortDescription: String!
   title: String!
+  tutors: [ID!]
   type: String!
-  userId: ID!
-}
-
-input NewEducation {
-  degree: String!
-  graduationYear: String!
-  institution: String!
-  userId: ID!
-}
-
-input NewFile {
-  category: String!
-  file: Upload!
-  userId: ID!
-}
-
-input NewMail {
-  attach: Boolean!
-  body: Any!
-  subject: String!
-  to: [String!]
-}
-
-input NewNote {
-  courseId: ID!
-  description: String!
-  title: String!
-  url: String!
-}
-
-input NewQuiz {
-  courseId: ID!
-  description: String!
-  title: String!
-}
-
-input NewReferee {
-  email: String!
-  fullName: String!
-  phone: String!
   userId: ID!
 }
 
@@ -213,89 +471,188 @@ input NewUser {
   password: String!
 }
 
-input NewVideo {
-  courseId: ID!
-  description: String!
-  title: String!
-  url: String!
-}
-
-type Note {
-  courseId: ID!
-  createdAt: Time
-  deletedAt: Time
-  description: String!
+type Notification {
+  course: Course!
+  createdAt: Time!
   id: ID!
-  text: String!
-  title: String!
-  updatedAt: Time
+  link: String
+  read: Boolean!
+  recipient: User!
+  sender: User!
+  type: NotificationType!
 }
 
-type Query {
-  course: Course
-  courses(ids: [ID!]): [Course]
-  education(id: ID!): Education!
-  educations(userId: ID): [Education!]!
-  file(id: ID!): File!
-  files(userId: ID!): [File!]!
-  mail(id: ID!): Mail
-  mails: [Mail]
-  note(id: ID!): Note!
-  notes(limit: Int = 25, offset: Int = 0): [Note!]!
-  quiz(id: ID!): Quiz!
-  quizzes(limit: Int = 25, offset: Int = 0): [Quiz!]!
-  referee(id: ID!): Referee!
-  referees(userId: ID): [Referee!]!
-  refresh: User
-  role(id: ID!): Role
-  roles: [Role]
-  setting(id: ID!): Role!
-  settings(limit: Int = 25, offset: Int = 0): [Setting!]!
-  user(id: ID!): User
-  users: [User]
-  video(id: ID!): Video!
-  videos(limit: Int = 25, offset: Int = 0): [Video!]!
+enum NotificationType {
+  ANNOUNCEMENT
+  COURSE_UPDATE
+  FORUM_UPDATE
+  GRADE_UPDATE
+  MESSAGE
 }
 
-type Question {
-  answer: AnswerOption
-  correctAnswerID: String
-  description: String
-  id: ID!
-  question: String
-  questionType: String
-  quiz: Quiz
-  quizId: String
-}
-
-type Quiz {
-  courseId: ID!
-  createdAt: Time
-  deletedAt: Time
+type Penalty {
   description: String!
   id: ID!
-  questions: [Question]
-  quizType: String
-  targetId: String
-  title: String!
-  updatedAt: Time
+  name: String!
+  percentage: Int!
 }
 
-type Referee {
-  createdAt: Time
-  deletedAt: Time
-  email: String!
-  fullName: String!
+type Permission {
   id: ID!
-  phone: String!
-  updatedAt: Time
+  model: Model!
+  permissions: [CRUDPermission!]!
   userId: ID!
 }
 
-type Role {
+input PermissionInput {
+  model: Model!
+  permissions: [CRUDPermission!]!
+  userId: ID!
+}
+
+enum ProctoringMethod {
+  AUTOMATED
+  MANUAL
+  NONE
+}
+
+enum ProgramType {
+  DIPLOMA
+  PGDT
+}
+
+type Query {
+  activities(courseID: ID): [Activity!]!
+  activity(id: ID!): Activity
+  allMedia: [Media!]!
+  course(id: ID!): Course!
+  courses(userId: ID): [Course!]!
+  evaluationCriteria(id: ID!): EvaluationCriteria
+  evaluationCriterias: [EvaluationCriteria!]!
+  forum(id: ID!): Forum
+  forumComment(id: ID!): ForumComment
+  forumComments(courseId: ID): [ForumComment!]!
+  forumPost(id: ID!): ForumPost
+  forumPosts(courseId: ID, tags: [ID]): [ForumPost!]!
+  forums(courseId: ID): [Forum!]!
+  getPermissionsForModel(model: Model!): [Permission!]!
+  getPermissionsForUser(userId: ID!): [Permission!]!
+  grade(id: ID!): Grade!
+  grades: [Grade!]!
+  media(id: ID!): Media
+  mediaByType(type: MediaType!): [Media!]!
+  notifications(courseId: ID, read: Boolean, recipientId: ID): [Notification!]!
+  quiz(id: ID!): Quiz
+  quizzes: [Quiz!]!
+  setting(id: ID!): Role!
+  settings(limit: Int = 25, offset: Int = 0): [Setting!]!
+  submission(id: ID!): Submission
+  submissions: [Submission!]!
+  target(id: ID!): Target
+  targets(courseId: ID): [Target!]!
+  user(id: ID!): User
+  users: [User]
+}
+
+type Question {
+  categories: [String]
+  choices: [AnswerChoice]
+  correctAnswer: String
+  feedback: String
+  hints: [String]
   id: ID!
-  name: String
-  permissions: [Any]
+  matchingPairs: [MatchingPair]
+  pointValue: Int
+  randomize: Boolean
+  text: String!
+  type: QuestionType!
+}
+
+enum QuestionType {
+  ESSAY
+  MATCHING
+  MULTIPLE_CHOICE
+  MULTIPLE_CORRECT
+  SHORT_ANSWER
+  TRUE_FALSE
+}
+
+type Quiz {
+  categories: [String!]
+  certificate: Boolean
+  course: Course!
+  createdAt: Time!
+  description: String
+  dueDate: String!
+  duration: Int
+  endTime: Time!
+  gradeIds: [ID!]!
+  id: ID!
+  isLocked: Boolean!
+  name: String!
+  passingScore: Int
+  proctoringMethod: ProctoringMethod
+  questionIds: [ID!]!
+  quizType: QuizType!
+  randomizeAnswers: Boolean
+  randomizeQuestions: Boolean
+  resultsReleaseDate: Time
+  startDate: Time!
+  startTime: Time!
+  submissionIds: [ID]
+  timeLimit: Int
+  updatedAt: Time!
+  waitTime: Int
+  weight: Int
+}
+
+enum QuizType {
+  ASSIGNMENT
+  EXAM
+}
+
+type Reminder {
+  createdAt: Time!
+  id: ID!
+  message: String!
+  sendTime: Time!
+  sent: Boolean!
+  target: Target!
+  updatedAt: Time!
+  user: User!
+}
+
+enum RepeatInterval {
+  DAY
+  MONTH
+  WEEK
+  YEAR
+}
+
+enum ResubmissionPolicy {
+  ALLOWED
+  LIMIT_NUMBER
+  LIMIT_TIME
+  NOT_ALLOWED
+}
+
+enum Role {
+  ADMIN
+  ALUMNI
+  GUEST
+  PARTNER
+  STUDENT
+  SUPER_ADMIN
+  SUPPORT
+  TEACHER
+}
+
+type ScoreDistribution {
+  grade: String!
+  id: ID!
+  maxScore: Int!
+  minScore: Int!
+  percentage: Int!
 }
 
 type Setting {
@@ -305,50 +662,191 @@ type Setting {
   userId: ID!
 }
 
+type Submission {
+  answers: [Answer!]!
+  completedAt: Time
+  createdAt: Time!
+  endTime: Time
+  feedback: [String]
+  grade: Float
+  id: ID!
+  points: Int
+  quiz: Quiz!
+  startTime: Time!
+  startedAt: Time!
+  updatedAt: Time!
+  userID: String!
+  weight: Int
+}
+
+input SubmissionInput {
+  answers: [AnswerInput!]!
+  endTime: Time
+  feedback: [String]
+  grade: Float
+  points: Int
+  quiz: UpdateQuizInput!
+  startTime: Time!
+  startedAt: Time!
+  userID: String!
+  weight: Int
+}
+
+type Subscription {
+  activityAdded: Activity
+  activityDeleted: ID
+  activityUpdated: Activity
+  notificationAdded: Notification!
+}
+
+type Tag {
+  courseIds: [ID!]!
+  id: ID!
+  name: String!
+  postIds: [ID!]!
+}
+
 type Target {
-  Quizzes: [Quiz]
-  checkList: [String]
-  completionInstructions: String
+  completionDate: Time
+  course: Course!
+  createdAt: Time!
+  currentValue: Int
   description: String
+  dueDate: Time!
   id: ID!
-  linkToComplete: String
-  resourceURL: String
-  resubmittable: Boolean
-  reviewChecklist: [String]
-  role: Role
-  sessionAt: Time
-  sortIndex: Int
-  targetGroup: TargetGroup
-  targetGroupID: String
-  targetVersions: TargetVersionList
-  title: String
+  isCompleted: Boolean!
+  name: String!
+  reminders: [Reminder]
+  repeatEndDate: Time
+  repeatInterval: RepeatInterval
+  targetMetric: String
+  targetType: TargetType!
+  targetValue: Int
+  units: String
+  updatedAt: Time!
 }
 
-type TargetGroup {
-  id: ID!
-}
-
-type TargetVersionList {
-  id: ID!
-}
-
-type Thumbnail {
-  id: ID!
-  url: String!
-  videoId: ID!
+enum TargetType {
+  MAXIMUM
+  MINIMUM
+  TARGET
 }
 
 scalar Time
 
-type Timeline {
-  courseId: ID!
+input UpdateActivityInput {
+  activityType: ActivityType
+  courseContentID: ID
   id: ID!
 }
 
-input UpdateRole {
+input UpdateCourseInput {
+  activityIds: [ID!]
+  assignmentIds: [ID!]
+  code: String!
+  courseContentIds: [ID!]
+  coverImageUrl: String
+  description: String
+  endDate: Time
+  forumId: ID
+  gradeIds: [ID!]
+  id: ID!
+  instructorIds: [ID!]!
+  matricNumber: String!
+  programType: ProgramType!
+  quizIds: [ID!]
+  semester: String!
+  shortDescription: String!
+  startDate: Time
+  status: CourseStatus!
+  studentIds: [ID!]
+  title: String!
+  type: CourseType!
+}
+
+input UpdateEvaluationCriteriaInput {
+  isPassFail: Boolean
+  passingScore: Int
+  quizId: ID!
+  resubmissionPolicy: ResubmissionPolicy
+  weight: Int
+}
+
+input UpdateFileInput {
+  createdAt: Time
+  deletedAt: Time
+  encoding: String!
+  mimetype: String!
+  name: String!
+  size: Int!
+  updatedAt: Time
+  url: String!
+}
+
+input UpdateForumCommentInput {
+  content: String
+  files: [ID!]
+}
+
+input UpdateForumInput {
+  description: String
+  name: String
+  tags: [ID!]
+}
+
+input UpdateForumPostInput {
+  content: String
+  files: [ID!]
+  tags: [ID!]
+  title: String
+}
+
+input UpdateGradeInput {
+  assignmentId: ID
+  comments: String
+  courseId: ID
+  criteria: String
+  id: ID!
+  studentId: ID
+  value: Int
+}
+
+input UpdateMediaInput {
+  category: String!
+  description: String
+  duration: Int64!
+  file: UpdateFileInput!
+  id: ID!
+  mediaType: MediaType!
+  title: String!
+  videoPlayerInfo: VideoPlayerInfoInput
+}
+
+input UpdateNotificationInput {
+  read: Boolean
+}
+
+input UpdateQuestionInput {
+  categories: [String]
+  choices: [AnswerChoiceInput]
+  correctAnswer: String
+  feedback: String
+  hints: [String]
+  id: ID!
+  matchingPairs: [MatchingPairInput]
+  pointValue: Int
+  randomize: Boolean
+  text: String!
+  type: QuestionType!
+}
+
+input UpdateQuizInput {
+  categories: [String!]
   id: ID!
   name: String
-  permissions: [Any]
+  questions: [UpdateQuestionInput!]
+  shuffleQuestions: Boolean
+  timeLimit: Int
 }
 
 input UpdateSetting {
@@ -356,11 +854,21 @@ input UpdateSetting {
   permissions: [String]
 }
 
-scalar Upload
-
-input UploadFile {
-  file: Upload!
+input UpdateTagInput {
+  name: String
 }
+
+input UpdateTargetInput {
+  courseId: ID
+  description: String
+  endDate: Time
+  name: String
+  startDate: Time
+  targetValue: Int
+  units: String
+}
+
+scalar Upload
 
 type User {
   about: String!
@@ -397,6 +905,7 @@ type User {
   pastorEmail: String!
   pastorName: String!
   pastorPhone: String!
+  permissionIds: [ID!]!
   permissions: [String]
   phone: String!
   platform: String!
@@ -407,7 +916,7 @@ type User {
   reason: String!
   referees: [ID!]
   regNumber: String!
-  role: String!
+  role: Role!
   salvationBrief: String!
   scholarship: Boolean
   scholarshipReason: String!
@@ -421,15 +930,18 @@ type User {
   zip: String!
 }
 
-type Video {
-  courseId: ID!
-  createdAt: Time
-  deletedAt: Time
-  description: String!
+input VerifyInput {
+  code: String!
   id: ID!
-  related(limit: Int = 10, offset: Int = 0): [Video!]!
-  thumbnail: Thumbnail
-  title: String!
-  updatedAt: Time
-  url: String!
+  resend: Boolean!
+}
+
+type VideoPlayerInfo {
+  currentTime: Int
+  duration: Int
+}
+
+input VideoPlayerInfoInput {
+  currentTime: Int
+  totalTime: Int
 }
