@@ -4,6 +4,9 @@
   export let data: PageData;
 </script>
 
+
+<div class="i-bx:adjust text-6xl text-primary"></div>
+
 <div class="tabs">
   <a class="tab tab-lifted">Tab 1</a> 
   <a class="tab tab-lifted tab-active">Tab 2</a> 
