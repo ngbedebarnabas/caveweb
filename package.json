@@ -2,7 +2,7 @@
     "name": "caveweb",
     "version": "0.0.1",
     "scripts": {
-        "start": "HOST=0.0.0.0 vite dev --port 8080 --open",
+        "start": "vite dev --port 8080 --open",
         "build": "svelte-kit sync && svelte-package",
         "prepublishOnly": "echo 'Did you mean to publish `./package/`, instead of `./`?' && exit 1",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",

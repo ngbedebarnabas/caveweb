@@ -2,15 +2,15 @@
   <div class="md:grid md:grid-cols-3 md:gap-6">
     <div class="md:col-span-1">
       <div class="px-4 sm:px-0">
-        <h3 class="text-base font-semibold leading-6 ">Notifications</h3>
-        <p class="mt-1 text-sm ">Decide which communications you'd like to receive and how.</p>
+        <h3 class="text-base font-semibold leading-6 ">Health</h3>
+        <p class="mt-1 text-sm ">Details about your health status</p>
       </div>
     </div>
     <div class="mt-5 md:col-span-2 md:mt-0">
       <form action="#" method="POST">
         <div class="overflow-hidden shadow sm:rounded-md">
           <div class="space-y-6 bg-base-100 px-4 py-5 sm:p-6">
-            <fieldset>
+            <!-- <fieldset>
               <legend class="sr-only">By Email</legend>
               <div class="text-sm font-semibold leading-6 " aria-hidden="true">By Email</div>
               <div class="mt-4 space-y-4">
@@ -72,7 +72,7 @@
                   >
                 </div>
               </div>
-            </fieldset>
+            </fieldset> -->
             <div class="text-right">
               <button class="btn">Save</button>
             </div>

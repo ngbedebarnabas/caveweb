@@ -3,7 +3,7 @@
     <div class="md:col-span-1">
       <div class="px-4 sm:px-0">
         <h3 class="text-base font-semibold leading-6 ">Personal Information</h3>
-        <p class="mt-1 text-sm ">Use a permanent address where you can receive mail.</p>
+        <p class="mt-1 text-sm ">Your Contact and personal information are very important and should be accurate.</p>
       </div>
     </div>
     <div class="mt-5 md:col-span-2 md:mt-0">
@@ -39,8 +39,49 @@
 
               <div class="relative col-span-6 sm:col-span-3">
                 <input
-                  name="email"
+                  name="middlename"
                   type="text"
+                  id="middleName"
+                  class=" input input-bordered floating-input peer focus:border-accent-focus"
+                  placeholder=" "
+                />
+                <label for="middleName" class="floating-label peer-focus:text-accent-focus">
+                  Middle Name
+                </label>
+              </div>
+
+              <div class="relative col-span-6 sm:col-span-3">
+                <select
+                  name="gender"
+                  id="gender"
+                  class=" select input-bordered floating-input peer focus:border-accent-focus"
+                  placeholder=" "
+                >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                </select>
+                <label for="gender" class="floating-label peer-focus:text-accent-focus">
+                  Gender
+                </label>
+              </div>
+
+              <div class="relative col-span-6 sm:col-span-3">
+                <input
+                  name="dob"
+                  type="date"
+                  id="dob"
+                  class=" input input-bordered floating-input peer focus:border-accent-focus"
+                  placeholder=" "
+                />
+                <label for="dob" class="floating-label peer-focus:text-accent-focus">
+                  Date of Birth
+                </label>
+              </div>
+
+              <div class="relative col-span-6 sm:col-span-3">
+                <input
+                  name="email"
+                  type="email"
                   id="email"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
@@ -51,22 +92,20 @@
               </div>
 
               <div class="relative col-span-6 sm:col-span-3">
-                <select
-                  name="lastName"
-                  id="lastName"
-                  class=" select input-bordered floating-input peer focus:border-accent-focus"
+                <input
+                  name="phoneNo"
+                  type="text"
+                  id="phoneNo"
+                  class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
-                >
-                  <option>United States</option>
-                  <option>Canada</option>
-                  <option>Mexico</option>
-                </select>
-                <label for="lastName" class="floating-label peer-focus:text-accent-focus">
-                  Last Name
+                />
+                <label for="phoneNo" class="floating-label peer-focus:text-accent-focus">
+                  Phone Number
                 </label>
               </div>
 
-              <div class="relative col-span-6">
+
+              <div class="relative col-span-6 lg:col-span-3">
                 <input
                   name="address"
                   type="text"
@@ -79,7 +118,7 @@
                 </label>
               </div>
 
-              <div class="relative col-span-6 sm:col-span-6 lg:col-span-2">
+              <div class="relative col-span-6 sm:col-span-6 lg:col-span-3">
                 <input
                   name="city"
                   type="text"
@@ -90,7 +129,20 @@
                 <label for="city" class="floating-label peer-focus:text-accent-focus"> City </label>
               </div>
 
-              <div class="relative col-span-6 sm:col-span-6 lg:col-span-2">
+              <div class="relative col-span-6 sm:col-span-6 lg:col-span-3">
+                <input
+                  name="zip"
+                  type="text"
+                  id="zip"
+                  class=" input input-bordered floating-input peer focus:border-accent-focus"
+                  placeholder=" "
+                />
+                <label for="zip" class="floating-label peer-focus:text-accent-focus">
+                  ZIP / Postal code
+                </label>
+              </div>
+
+              <div class="relative col-span-6 sm:col-span-6 lg:col-span-3">
                 <input
                   name="region"
                   type="text"
@@ -103,18 +155,19 @@
                 >
               </div>
 
-              <div class="relative col-span-6 sm:col-span-6 lg:col-span-2">
+              <div class="relative col-span-6 sm:col-span-3">
                 <input
-                  name="zip"
+                  name="country"
                   type="text"
-                  id="zip"
+                  id="country"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
                 />
-                <label for="zip" class="floating-label peer-focus:text-accent-focus">
-                  ZIP / Postal code
+                <label for="country" class="floating-label peer-focus:text-accent-focus">
+                  Country
                 </label>
               </div>
+
             </div>
 
             <div class="text-right mt-4">
