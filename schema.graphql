@@ -30,6 +30,35 @@ enum ActivityType {
   RESOURCE_ACCESSED
 }
 
+enum AllowedModel {
+  ACTIVITY
+  ANSWER_CHOICE
+  COURSE
+  COURSE_CONTENT
+  FILE
+  FORUM
+  FORUM_COMMENT
+  FORUM_POST
+  GRADE
+  MATCHING_PAIR
+  NOTIFICATION
+  QUESTION
+  QUIZ
+  SUBMISSION
+  TARGET
+  USER
+}
+
+enum AllowedPermission {
+  CREATE
+  DELETE
+  GRANT_PERMISSIONS
+  READ
+  REVOKE_PERMISSIONS
+  UPDATE
+  UPDATE_PERMISSIONS
+}
+
 type Answer {
   choices: [AnswerChoice]
   createdAt: Time!
@@ -78,13 +107,6 @@ type Bonus {
   id: ID!
   name: String!
   percentage: Int!
-}
-
-enum CRUDPermission {
-  CREATE
-  DELETE
-  READ
-  UPDATE
 }
 
 type Course {
@@ -391,25 +413,6 @@ enum MediaType {
   WORD_DOC
 }
 
-enum Model {
-  ACTIVITY
-  ANSWER_CHOICE
-  COURSE
-  COURSE_CONTENT
-  FILE
-  FORUM
-  FORUM_COMMENT
-  FORUM_POST
-  GRADE
-  MATCHING_PAIR
-  NOTIFICATION
-  QUESTION
-  QUIZ
-  SUBMISSION
-  TARGET
-  USER
-}
-
 type Mutation {
   createActivity(input: CreateActivityInput!): Activity
   createCourse(input: CreateCourseInput): Course!
@@ -499,14 +502,14 @@ type Penalty {
 
 type Permission {
   id: ID!
-  model: Model!
-  permissions: [CRUDPermission!]!
+  model: AllowedModel!
+  permissions: [AllowedPermission!]!
   userId: ID!
 }
 
 input PermissionInput {
-  model: Model!
-  permissions: [CRUDPermission!]!
+  model: AllowedModel!
+  permissions: [AllowedPermission!]!
   userId: ID!
 }
 
@@ -535,7 +538,7 @@ type Query {
   forumPost(id: ID!): ForumPost
   forumPosts(courseId: ID, tags: [ID]): [ForumPost!]!
   forums(courseId: ID): [Forum!]!
-  getPermissionsForModel(model: Model!): [Permission!]!
+  getPermissionsForModel(model: AllowedModel!): [Permission!]!
   getPermissionsForUser(userId: ID!): [Permission!]!
   grade(id: ID!): Grade!
   grades: [Grade!]!
