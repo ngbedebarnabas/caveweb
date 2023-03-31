@@ -4,7 +4,7 @@
       <div class="px-4 sm:px-0">
         <h3 class="text-base font-semibold leading-6 ">Profile</h3>
         <p class="mt-1 text-sm ">
-          This information will be displayed publicly so be careful what you share.
+          Kindly fill out the form to update your profile information.
         </p>
       </div>
     </div>
