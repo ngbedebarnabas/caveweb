@@ -1,3 +1,28 @@
+<script>
+// @ts-nocheck
+
+
+  import { enhance } from "$app/forms";
+
+let godsWorkings = []
+let firstTime = true
+
+const onSubmit = ({ form, data, action, cancel, submitter }) => {
+    // `form` is the `<form>` element
+    // `data` is its `FormData` object
+    // `action` is the URL to which the form is posted
+    // `cancel()` will prevent the submission
+    // `submitter` is the `HTMLElement` that caused the form to be submitted
+
+    data.set("godsWorkings", godsWorkings)
+
+    return async ({ result, update }) => {
+      // `result` is an `ActionResult` object
+      // `update` is a function which triggers the logic that would be triggered if this callback wasn't set
+      update();
+    };
+  }
+</script>
 <div class="mt-10 sm:mt-0">
   <div class="md:grid md:grid-cols-3 md:gap-6">
     <div class="md:col-span-1">
@@ -9,7 +34,7 @@
     <div class="mt-5 md:col-span-2 md:mt-0">
 
       <!-- FORM BEGINS -->
-      <form action="#" method="POST" name="spirituality">
+      <form action="?/spiritual" method="POST" use:enhance={onSubmit}>
         <div class="overflow-hidden shadow sm:rounded-md">
           <div class="space-y-6 bg-base-100 px-4 py-5 sm:p-6">
             <fieldset>
@@ -21,7 +46,7 @@
 
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="born again" checked class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="born again" checked class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -32,7 +57,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="water baptism" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="water baptism" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -43,7 +68,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="holy ghost baptism" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="holy ghost baptism" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -54,7 +79,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="speak in tongues" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="speak in tongues" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -65,7 +90,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="spiritual gift" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="spiritual gift" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -76,7 +101,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="church worker" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="church worker" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -87,7 +112,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="call of God" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="call of God" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -98,7 +123,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="serving in a ministry" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="serving in a ministry" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -109,7 +134,7 @@
                 <!-- end of item -->
                 <div class="flex items-center">
                   <div class="flex h-6 items-center">
-                    <input type="checkbox" name="experience" value="founder and pioneer of a ministry" class="checkbox" />
+                    <input bind:group={godsWorkings} type="checkbox" name="godsWorkings" value="founder and pioneer of a ministry" class="checkbox" />
                   </div>
                   <div class="ml-3 text-sm leading-6">
                     <p class="text-gray-300">
@@ -119,9 +144,9 @@
                 </div>
                 <!-- end of item -->
 
-                <textarea class="textarea textarea-bordered col-span-3 my-5" name="briefExperience" id="briefExperience" placeholder="A Brief account of your Salvation Experience"></textarea>
+                <textarea class="textarea textarea-bordered col-span-3 my-5" name="salvationBrief" id="briefExperience" placeholder="A Brief account of your Salvation Experience"></textarea>
 
-                <textarea class="textarea textarea-bordered col-span-3 my-5" name="whyAdullam" id="whyAdullam" placeholder="Why do you want to attend Adullam?"></textarea>
+                <textarea class="textarea textarea-bordered col-span-3 my-5" name="reason" id="whyAdullam" placeholder="Why do you want to attend Adullam?"></textarea>
 
               </div>
 
@@ -134,80 +159,81 @@
               <legend class="contents text-sm font-semibold leading-6 ">Ministry/Church Details</legend>
               <p class="text-sm text-gray-500">Let's get in touch with where you are coming from.</p>
               
-              <div class="grid grid-cols-3 grid-rows-2 my-2 py-2">
-                <div class="m-2">
-                  <input
-                  name="pastorFirstName"
-                  type="text"
-                  id="pastorFirstName"
-                  class=" input input-bordered floating-input peer focus:border-accent-focus"
-                  placeholder="First Name"
-                />
-                <label for="pastorFirstName" class="floating-label peer-focus:text-accent-focus"
-                  >First Name</label
-                >
-                </div>
-                <!-- end of first field -->
-                <div class="m-2">
-                  <input
-                  name="pastorLastName"
-                  type="text"
-                  id="pastorLastName"
-                  class=" input input-bordered floating-input peer focus:border-accent-focus"
-                  placeholder="Last Name"
-                />
-                <label for="pastorLastName" class="floating-label peer-focus:text-accent-focus"
-                  >Last Name</label
-                >
-                </div>
-                <!-- end of first field -->
+              <div class="overflow-hidden shadow sm:rounded-md">
+                <div class="bg-base-100 px-4 py-5 sm:p-6">
+                  <div class="grid grid-cols-6 gap-6">
+                    <div class="relative col-span-6 sm:col-span-3">
+                      <input
+                        name="pastorName"
+                        type="text"
+                        id="pastorName"
+                        class=" input input-bordered floating-input peer focus:border-accent-focus"
+                        placeholder=" "
+                      />
+                      <label for="pastorName" class="floating-label peer-focus:text-accent-focus">
+                        Pastor Name
+                      </label>
+                    </div>
+      
+                    <div class="relative col-span-6 sm:col-span-3">
+                      <input
+                        name="pastorEmail"
+                        type="text"
+                        id="pastorEmail"
+                        class=" input input-bordered floating-input peer focus:border-accent-focus"
+                        placeholder=" "
+                      />
+                      <label for="pastorEmail" class="floating-label peer-focus:text-accent-focus">
+                        Pastor's Email
+                      </label>
+                    </div>
+      
+                    <div class="relative col-span-6 sm:col-span-3">
+                      <input
+                        name="pastorPhone"
+                        type="text"
+                        id="pastorPhone"
+                        class=" input input-bordered floating-input peer focus:border-accent-focus"
+                        placeholder=" "
+                      />
+                      <label for="pastorPhone" class="floating-label peer-focus:text-accent-focus">
+                        Pastor's Phone Number
+                      </label>
+                    </div>
+                    
+                    <div class="relative col-span-6 sm:col-span-3">
+                      <input
+                        name="churchName"
+                        type="text"
+                        id="churchName"
+                        class=" input input-bordered floating-input peer focus:border-accent-focus"
+                        placeholder=" "
+                      />
+                      <label for="churchName" class="floating-label peer-focus:text-accent-focus">
+                        Name of Ministry
+                      </label>
+                    </div>
 
-                <div class="m-2">
-                  <input
-                  name="pastorPhone"
-                  type="text"
-                  id="pastorPhone"
-                  class=" input input-bordered floating-input peer focus:border-accent-focus"
-                  placeholder="Pastor Phone"
-                />
-                <label for="pastorPhone" class="floating-label peer-focus:text-accent-focus"
-                  >Pastor Phone</label
-                >
-                </div>
-                <!-- end of first field -->
-
-                <div class="m-2 md:col-span-1">
-                  <input
-                  name="churchName"
-                  type="text"
-                  id="churchName"
-                  class=" input input-bordered floating-input peer focus:border-accent-focus"
-                  placeholder="Church Name"
-                />
-                <label for="churchName" class="floating-label peer-focus:text-accent-focus"
-                  >Church Name</label
-                >
-                </div>
-                <!-- end of first field -->
-
-                <div class="m-2 md:col-span-2">
-                  <input
-                  name="churchAddress"
-                  type="text"
-                  id="churchAddress"
-                  class=" input input-bordered floating-input peer focus:border-accent-focus"
-                  placeholder="Ministry Address"
-                />
-                <label for="churchAddress" class="floating-label peer-focus:text-accent-focus"
-                  >Ministry Address</label
-                >
-                </div>
-                <!-- end of first field -->
-              </div>
+                    <div class="relative col-span-6 ">
+                      <input
+                        name="churchAddress"
+                        type="text"
+                        id="churchAddress"
+                        class=" input input-bordered floating-input peer focus:border-accent-focus"
+                        placeholder=" "
+                      />
+                      <label for="churchAddress" class="floating-label peer-focus:text-accent-focus">
+                        Ministry Address
+                      </label>
+                    </div>
+      
+                    
 
             </fieldset>
             <div class="text-right">
-              <button class="btn">Save</button>
+
+
+              <button class="btn">{firstTime?"submit":"save"}</button>
             </div>
           </div>
         </div>

@@ -1,3 +1,8 @@
+<script>
+
+  import { enhance } from "$app/forms";
+
+</script>
 <div class="mt-10 sm:mt-0">
   <div class="md:grid md:grid-cols-3 md:gap-6">
     <div class="md:col-span-1">
@@ -7,7 +12,7 @@
       </div>
     </div>
     <div class="mt-5 md:col-span-2 md:mt-0">
-      <form action="#" method="POST">
+      <form action="?/personal" method="POST" use:enhance>
         <div class="overflow-hidden shadow sm:rounded-md">
           <div class="bg-base-100 px-4 py-5 sm:p-6">
             <div class="grid grid-cols-6 gap-6">
@@ -18,6 +23,7 @@
                   id="firstName"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="firstName" class="floating-label peer-focus:text-accent-focus">
                   First Name
@@ -31,6 +37,7 @@
                   id="lastName"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="lastName" class="floating-label peer-focus:text-accent-focus">
                   Last Name
@@ -39,11 +46,12 @@
 
               <div class="relative col-span-6 sm:col-span-3">
                 <input
-                  name="middlename"
+                  name="middleName"
                   type="text"
                   id="middleName"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="middleName" class="floating-label peer-focus:text-accent-focus">
                   Middle Name
@@ -56,6 +64,7 @@
                   id="gender"
                   class=" select input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 >
                 <option value="male">Male</option>
                 <option value="female">Female</option>
@@ -72,6 +81,7 @@
                   id="dob"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="dob" class="floating-label peer-focus:text-accent-focus">
                   Date of Birth
@@ -85,6 +95,7 @@
                   id="email"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="email" class="floating-label peer-focus:text-accent-focus">
                   Email
@@ -93,11 +104,12 @@
 
               <div class="relative col-span-6 sm:col-span-3">
                 <input
-                  name="phoneNo"
+                  name="phone"
                   type="text"
                   id="phoneNo"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="phoneNo" class="floating-label peer-focus:text-accent-focus">
                   Phone Number
@@ -112,6 +124,7 @@
                   id="address"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="address" class="floating-label peer-focus:text-accent-focus">
                   Street address
@@ -125,6 +138,7 @@
                   id="city"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="city" class="floating-label peer-focus:text-accent-focus"> City </label>
               </div>
@@ -144,11 +158,12 @@
 
               <div class="relative col-span-6 sm:col-span-6 lg:col-span-3">
                 <input
-                  name="region"
+                  name="state"
                   type="text"
                   id="region"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="region" class="floating-label peer-focus:text-accent-focus"
                   >State / Province</label
@@ -162,6 +177,7 @@
                   id="country"
                   class=" input input-bordered floating-input peer focus:border-accent-focus"
                   placeholder=" "
+                  required
                 />
                 <label for="country" class="floating-label peer-focus:text-accent-focus">
                   Country
