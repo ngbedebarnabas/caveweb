@@ -96,7 +96,7 @@
 
 <!-- Components -->
 
-<!-- <Videos /> -->
+<Videos />
 <!-- <Documents /> -->
 <!-- <Assignments /> -->
 <!-- <Forum /> -->
