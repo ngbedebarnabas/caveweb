@@ -98,5 +98,5 @@
 
 <Videos />
 <!-- <Documents /> -->
-<!-- <Assignments /> -->
+<Assignments />
 <!-- <Forum /> -->

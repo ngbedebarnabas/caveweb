@@ -1,8 +1,8 @@
-import { CreateActivityStore, CreateUserStore, GetUserStore } from '$houdini';
+import { CreateActivityStore, CreateUserStore } from '$houdini';
 import type { Actions, PageServerLoad } from './$types';
 
 export const load = (async () => {
-  const store=  new GetUserStore()
+//   const store=  new GetUserStore()
     return {};
 }) satisfies PageServerLoad;
 

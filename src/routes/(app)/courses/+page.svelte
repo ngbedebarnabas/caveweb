@@ -209,7 +209,6 @@
               </div>
               <!-- end of input -->
 
-
               <!-- input -->
               <textarea class="textarea textarea-bordered col-span-4 sm:col-span-4 mr-2 mb-4" name="description" id="description" placeholder="Course Description"></textarea>
               <!-- end of input -->

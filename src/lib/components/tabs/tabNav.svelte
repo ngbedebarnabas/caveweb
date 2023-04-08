@@ -4,7 +4,7 @@
   export let active = 0
 </script>
 
-<Nav tabs class="nav-tabs-custom border-0 mt-3">
+<nav tabs class="nav-tabs-custom border-0 mt-3">
   {#each menus as menu, i}
     <NavItem class={active == i ? "current" : ""}>
       <NavLink on:click={() => (active = i)} active={active == i}>
@@ -15,4 +15,4 @@
       </NavLink>
     </NavItem>
   {/each}
-</Nav>
+</nav>
