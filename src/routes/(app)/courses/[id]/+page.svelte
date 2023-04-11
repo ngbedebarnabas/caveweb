@@ -26,12 +26,12 @@
 
 <!-- TABS -->
 <div class="tabs my-8">
-  <a class="tab tab-bordered tab-active lg:mr-10">Overview</a> 
-  <a class="tab tab-bordered lg:mr-10">Videos</a> 
-  <a class="tab tab-bordered lg:mr-10">Documents</a>
-  <a class="tab tab-bordered lg:mr-10">Assignments</a>
-  <a class="tab tab-bordered lg:mr-10">Forum</a>
-  <a class="tab tab-bordered lg:mr-10">Exam</a>
+  <a href=" " class="tab tab-bordered tab-active lg:mr-10">Overview</a> 
+  <a href=" " class="tab tab-bordered lg:mr-10">Videos</a> 
+  <a href=" " class="tab tab-bordered lg:mr-10">Documents</a>
+  <a href=" " class="tab tab-bordered lg:mr-10">Assignments</a>
+  <a href=" " class="tab tab-bordered lg:mr-10">Forum</a>
+  <a href=" " class="tab tab-bordered lg:mr-10">Exam</a>
 </div>
 
 <!-- overview -->
